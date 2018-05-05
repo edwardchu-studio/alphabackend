@@ -25,7 +25,11 @@ SECRET_KEY = 'i1vp8mnnyx%-h$7j%mwl63$r60y5a_2rujeq8qb3dh=0zr3lox'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['127.0.0.1','35.227.178.210 ', 'localhost ', 'deeplearning.edwardchor.com']
+=======
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+>>>>>>> 3a3af22e2ab7648da8ec5349c06baedfe009a1c5
 
 
 # Application definition

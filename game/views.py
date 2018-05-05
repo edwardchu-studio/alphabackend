@@ -44,8 +44,12 @@ def next(request):
     rtn = {"status": "failed"}
     if request.method == "POST":
         rtn["status"]="success"
-        humanMove=request.POST.get("humanMove",(0,0))
+        print(request.POST)
 
+        humanMove=(request.POST.get("humanMove[r]",(0,0)),request.POST.get("humanMove[c]",(0,0)))
+
+        print(humanMove)
+        assert(len(humanMove)==2)
 
         game.HumanPlay(humanMove)
         print("Human makes a move: {}".format(humanMove))
