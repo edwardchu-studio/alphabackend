@@ -11,27 +11,31 @@ Dealing with requsts
 
 '''
 
-# from ..alphabrain.InterGame import InterGame
+from alphabrain.InterGame import InterGame,InterGameTest
 
 HUMAN_FIRST=-1
 HUMAN_SECOND=1
-# game=InterGame(order=HUMAN_FIRST)
+game=InterGameTest()
+
 
 @csrf_exempt
 def index(request):
     rtn = {"status": "failed"}
     if request.method == "POST":
         rtn["status"]="success"
-
+        rtn["msg"]="POST succeed"
+    if request.method == "GET":
+        rtn["status"]="success"
+        rtn["msg"]="GET succeed"
     return HttpResponse(json.dumps(rtn))
 
 @csrf_exempt
 def init(request):
     rtn = {"status": "failed"}
     if request.method == "POST":
-        print(request)
+        game.board=game.game.getInitBoard()
         rtn["status"]="success"
-
+        rtn["msg"]="init succeed"
     return HttpResponse(json.dumps(rtn))
 
 @csrf_exempt
@@ -39,18 +43,35 @@ def next(request):
 
     rtn = {"status": "failed"}
     if request.method == "POST":
-        print(request)
         rtn["status"]="success"
-        humanMove=request.GET['humanMove']
-        # game.HumanPlay(humanMove)
-        print(humanMove)
-
-        #return alpha moved
-        # alphaMove=game.AlphaPlay()
+        humanMove=request.POST.get("humanMove",(0,0))
 
 
-    return HttpResponse(json.dumps(rtn))
+        game.HumanPlay(humanMove)
+        print("Human makes a move: {}".format(humanMove))
+        result=game.judgeGame()
 
+        if result!=0:
+            #game ends
+            print("{} won.".format("Human" if result==1 else "Alpha"))
+            rtn["result"]="Human" if result==1 else "Alpha"
+            rtn['AlphaMove']=None
+            return HttpResponse(json.dumps(rtn))
+
+
+        #Time for Alpha
+        alphaMove=game.AlphaPlay()
+        result=game.judgeGame()
+
+        if result!=0:
+            print("{} won.".format("Human" if result==1 else "Alpha"))
+            rtn["result"]="Human" if result==1 else "Alpha"
+            rtn['AlphaMove']=alphaMove
+            return HttpResponse(json.dumps(rtn))
+        else:
+            rtn["result"]="Continues"
+            rtn['AlphaMove']=alphaMove
+            return HttpResponse(json.dumps(rtn))
 
 
 @csrf_exempt

@@ -1,4 +1,5 @@
 brainBackUp/
 .idea
-.idea/*
+.idea/
+test.pow
 .DS_Store
