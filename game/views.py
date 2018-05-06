@@ -15,7 +15,7 @@ from alphabrain.InterGame import InterGame,InterGameTest
 
 HUMAN_FIRST=-1
 HUMAN_SECOND=1
-game=InterGame()
+game=InterGameTest()
 
 
 @csrf_exempt

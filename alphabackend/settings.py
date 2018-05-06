@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i1vp8mnnyx%-h$7j%mwl63$r60y5a_2rujeq8qb3dh=0zr3lox'
+SECRET_KEY = '%$5z%4&s$)ci8(oo5xpzjr-3hu+1sm8zi9y8e9hdtn9$end0n5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['edwardchor.com','0,0,0,0','127.0.0.1','35.227.178.210 ', 'localhost ', 'deeplearning.edwardchor.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -119,4 +119,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
