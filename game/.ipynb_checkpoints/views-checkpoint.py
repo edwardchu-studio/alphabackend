@@ -34,8 +34,10 @@ def init(request):
     rtn = {"status": "failed"}
     if request.method == "POST":
         game.board=game.game.getInitBoard()
+        
         rtn["status"]="success"
         rtn["msg"]="init succeed"
+        print("Game initialized")
     return HttpResponse(json.dumps(rtn))
 
 @csrf_exempt
@@ -53,8 +55,10 @@ def next(request):
 
         game.HumanPlay(humanMove)
         print("Human makes a move: {}".format(humanMove))
+        game.showBoard()
         result=game.judgeGame()
-
+        _curScore=game.getScore()
+        print("Score after human move:{}".format(_curScore))
         if result!=0:
             #game ends
             print("{} won.".format("Human" if result==1 else "Alpha"))
@@ -64,13 +68,16 @@ def next(request):
 
         print("shifted to alphaaaaa")
         #Time for Alpha
-        alphaMove=game.AlphaPlay()
+        alphaMove=game.getAlphaPlayFromCache(humanMove)
         result=game.judgeGame()
-
+        print(alphaMove,type(alphaMove),type(alphaMove[0]))
+        game.showBoard()
+        _curScore=game.getScore()
+        print("Score after alpha move:{}".format(_curScore))
         if result!=0:
-            print("{} won.".format("Human" if result==1 else "Alpha"))
-            rtn["result"]="Human" if result==1 else "Alpha"
-            rtn['AlphaMove']=alphaMove
+            print("{} won.".format("Human Wins!" if result==1 else "Alpha Wins!"))
+            rtn["result"]="Human Wins!" if result==1 else "Alpha Wins!"
+            rtn['AlphaMove']=None
             return HttpResponse(json.dumps(rtn))
         else:
             rtn["result"]="Continues"
